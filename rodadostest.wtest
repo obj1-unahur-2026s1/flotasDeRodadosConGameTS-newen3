@@ -1,0 +1,72 @@
+import interiores.*
+import rodados.*
+import dependencias.*
+import colores.*
+import motores.*
+
+describe "test con dos dependencias"{
+    const deportes = new Dependencias(cantidadDeEmpleados = 45)
+    const cultura = new Dependencias(cantidadDeEmpleados = 31)
+
+    const cachito = new ChevroletCorsa(color = rojo)
+
+    //Rodados para la flota de deportes
+    const corsaAzul = new ChevroletCorsa(color = azul)
+    const corsaVerde = new ChevroletCorsa(color = verde)
+    const kwidConTanque = new RenaultKwid(tieneTanque = true)
+    const autoEspecial = new AutosEspeciales(capacidad = 5, velocidadMaxima = 160, peso = 1200, color = beige)
+
+    //Rodados para flota de cultura 
+    const kwidConTanque2  = new RenaultKwid(tieneTanque = true)
+    const kwidSinTanque  = new RenaultKwid(tieneTanque = false)
+
+
+
+    method inicializer() {
+        deportes.agregarAFlota(cachito)
+        deportes.agregarAFlota(corsaAzul)
+        deportes.agregarAFlota(corsaVerde)
+        deportes.agregarAFlota(kwidConTanque)
+        deportes.agregarAFlota(autoEspecial)
+
+        cultura.agregarAFlota(cachito)
+        cultura.agregarAFlota(kwidConTanque)
+        cultura.agregarAFlota(kwidConTanque2)
+        cultura.agregarAFlota(kwidSinTanque)
+        cultura.agregarAFlota(trafic)
+        
+        trafic.interior(popular)
+        trafic.motor(bataton)
+    }
+    test "peso total de la flota"{
+        self.inicializer()
+        assert.equals(6450 , deportes.pesoTotalFlota())
+    }
+
+    test "esta bien equipada" {
+        self.inicializer()
+        assert.equals(true, deportes.estaBienEquipada())
+    }
+
+    test "capacidad total de color azul es 7" {
+      self.inicializer()
+      assert.equals(7, deportes.capacidadTotalEnColor(azul))
+    }
+
+    test "color del rodado mas rapido es beige" {
+      self.inicializer()
+      assert.equals(beige, deportes.colorDelRodadoMasRapido())
+    }
+
+    test "si la dependencia es grande" {
+      self.inicializer()
+      assert.equals(true, deportes.esGrande())
+    }
+
+    test "capacidad faltante es de 25" {
+      self.inicializer()
+      assert.equals(25, deportes.capacidadFaltante())
+    }
+}
+
+
